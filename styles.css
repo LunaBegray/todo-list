@@ -1,0 +1,28 @@
+body{
+    padding: 50px;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+.container{
+    height: 900px;
+    width:1400px;
+    background-color:lightgreen;
+    display:flex;
+    column-gap: 10px;
+    justify-content:space-evenly;
+    flex-wrap: wrap;
+    align-items:space-between;
+    font-size:20px;
+}
+.form{
+    position:absolute;
+    z-index:1000;
+}
+.card{
+    height:200px;
+    width:250px;
+    background-color:lightyellow;
+    overflow-wrap:normal;
+    word-wrap: normal;
+}
