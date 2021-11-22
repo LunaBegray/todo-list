@@ -1,3 +1,4 @@
+console.log("web is working");
 let myLibrary = []; //my library
 
 class Book {
@@ -48,6 +49,7 @@ function display(){
 //creates 4 inputs for name, author, pages, read, then when continue pressed it adds a book with the info and deletes the form.
 let addBtn = document.querySelector(".addBtn");
 addBtn.addEventListener('click', function(){
+    console.log("add button clicked");
     let form = document.createElement("div");
     form.classList.add("form");
     let inputName = document.createElement("input")
