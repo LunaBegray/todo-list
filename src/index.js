@@ -1,3 +1,4 @@
+
 console.log("web is working");
 let myLibrary = []; //my library
 
@@ -18,19 +19,19 @@ function addBookToLibrary(book) {
 
 //loops through myLibrary to find books and display it.
 function display(){
-    for(i = 0; i < myLibrary.length; i++){
+    for(let i = 0; i < myLibrary.length; i++){
         let newCard = document.createElement("div");
         newCard.classList.add("card");
         newCard.textContent = myLibrary[i].name + " " + myLibrary[i].author + " " +myLibrary[i].pages + " " + myLibrary[i].read;
         newCard.id = myLibrary[i];
         let newBtn = document.createElement("button");
-        newBtn.textContent = "Remove Book"
+        newBtn.textContent = "Remove Task"
         newBtn.addEventListener('click', function(){
             newCard.remove();
             myLibrary.splice(myLibrary[i],1);
         });
         let anoBtn = document.createElement("button");
-        anoBtn.textContent = "Mark As Read";
+        anoBtn.textContent = "Mark As Done";
         anoBtn.addEventListener('click', function(){
             console.log("button lunched");
             if(newCard.style.backgroundColor == 'red'){
@@ -46,6 +47,7 @@ function display(){
         container.appendChild(newCard);
     }
 } 
+
 //creates 4 inputs for name, author, pages, read, then when continue pressed it adds a book with the info and deletes the form.
 let addBtn = document.querySelector(".addBtn");
 addBtn.addEventListener('click', function(){
