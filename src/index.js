@@ -95,7 +95,7 @@ addBtn.addEventListener('click', function(){
         addBookToLibrary(newBook);
         container.textContent = '';
        // display(); 
-        Store(newBook);
+        Store();
         form.remove();
     });
     form.appendChild(continueBtn);
@@ -131,7 +131,7 @@ function storageAvailable(type) {
 }
 
 //activates if storage is available
-function Store(newBook){
+function Store(){
     if (storageAvailable('localStorage')) {
         // Yippee! We can use localStorage awesomeness
         console.log("storage confirmed");
