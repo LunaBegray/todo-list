@@ -3,11 +3,12 @@ console.log("web is working");
 let myLibrary = []; //my library
 
 class Book {
-    constructor(name, author, pages, read){
+    constructor(name, author, pages, read, color){
         this.name = name;
         this.author = author;
         this.pages = pages;
         this.read = read;
+        this.color = color;
     }
 } //constructor for new books
 
@@ -90,7 +91,8 @@ addBtn.addEventListener('click', function(){
         let authorFNB  = inputAuthor.value;
         let pagesFNB = inputPages.value;
         let readFNB = inputRead.value;
-        let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB);
+        let colorFNB = 'lightyellow';
+        let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB);
         addBookToLibrary(newBook);
         container.textContent = '';
         display();
@@ -133,43 +135,54 @@ if (storageAvailable('localStorage')) {
     // Yippee! We can use localStorage awesomeness
     console.log("storage confirmed");
     //checks for certain element in the storage
-    if(!localStorage.getItem('name')) {
-    //puts all the needed values in the storage
     function populateStorage() {
         for(let i = 0; i < myLibrary.length; i++){
-            //maybe add the library inside the storage
-            localStorage.setItem('name', myLibrary[i].name.value);
-            localStorage.setItem('author', myLibrary[i].author.value);
-            localStorage.setItem('pages', myLibrary[i].pages.value);
-            localStorage.setItem('read', myLibrary[i].read.value);
+            localStorage.setItem('name' + i, myLibrary[i].name.value);
+            localStorage.setItem('author' + i, myLibrary[i].author.value);
+            localStorage.setItem('pages' + i, myLibrary[i].pages.value);
+            localStorage.setItem('read' + i, myLibrary[i].read.value);
+            console.log(myLbrary[i].color.value +"  :color value");
+            localStorage.setItem('color' + i, myLibrary[i].color.value);
         }
     }
-    populateStorage();
-    
-    } else {
-    setStyles();
-    
-  }
+    //moves values from storage to website, stores them in varaibles and uses them.
+    function setTasks() {
+        for(let i = 0; i < myLibrary.length; i++){
+            var currentName = localStorage.getItem('name' + i);
+            var currentAuthor = localStorage.getItem('author' + i);
+            var currentPages = localStorage.getItem('pages' + i);
+            var currentRead = localStorage.getItem('read' + i);
+            var currentColor = localStorage.getItem('color' + i);
+
+            myLibrary[i].name.value = currentName;
+            myLibrary[i].author.value = currentAuthor;
+            myLibrary[i].pages.value = currentPages;
+            myLbrary[i].read.value = currentRead;
+            myLibrary[i].color.value = currentColor;
+
+            let nameFNB = currentName;
+            let authorFNB  = currentAuthor;
+            let pagesFNB = currentPages;
+            let readFNB = currentRead;
+            let colorFNB = currentColor;
+            let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB);
+            addBookToLibrary(newBook);
+            container.textContent = '';
+            display();
+        }
+    }
+    if(!localStorage.getItem('name' + 0)) {
+        //if there is no storage then puted the library in the storage
+            populateStorage();
+        }
+    setTasks();
   }
   else {
     // Too bad, no localStorage for us
     console.log("storage declined");
   }
 
-  //moves values from storage to website, stores them in varaibles and uses them.
-function setStyles() {
-    var currentColor = localStorage.getItem('bgcolor');
-    var currentFont = localStorage.getItem('font');
-    var currentImage = localStorage.getItem('image');
-  
-    document.getElementById('bgcolor').value = currentColor;
-    document.getElementById('font').value = currentFont;
-    document.getElementById('image').value = currentImage;
-  
-    htmlElem.style.backgroundColor = '#' + currentColor;
-    pElem.style.fontFamily = currentFont;
-    imgElem.setAttribute('src', currentImage);
-  }
+
 /*
 // if storage changes it says what changed
 window.addEventListener('storage', function(e) {
@@ -179,9 +192,9 @@ window.addEventListener('storage', function(e) {
     document.querySelector('.my-url').textContent = e.read;
   }); 
   */
- 
+
 //removes certain key from storage
-storage.removeItem(keyName);
+ // storage.removeItem(keyName);
 
 /*
 //local storage shit section
