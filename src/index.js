@@ -159,7 +159,7 @@ function Store(){
                 myLibrary[i].name.value = currentName;
                 myLibrary[i].author.value = currentAuthor;
                 myLibrary[i].pages.value = currentPages;
-                myLbrary[i].read.value = currentRead;
+                myLibrary[i].read.value = currentRead;
                 myLibrary[i].color.value = currentColor;
     
                 let nameFNB = currentName;
