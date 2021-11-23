@@ -96,6 +96,7 @@ addBtn.addEventListener('click', function(){
         addBookToLibrary(newBook);
         container.textContent = '';
         display();
+        Store();
         form.remove();
     });
     form.appendChild(continueBtn);
@@ -131,55 +132,57 @@ function storageAvailable(type) {
 }
 
 //activates if storage is available
-if (storageAvailable('localStorage')) {
-    // Yippee! We can use localStorage awesomeness
-    console.log("storage confirmed");
-    //checks for certain element in the storage
-    function populateStorage() {
-        for(let i = 0; i < myLibrary.length; i++){
-            localStorage.setItem('name' + i, myLibrary[i].name.value);
-            localStorage.setItem('author' + i, myLibrary[i].author.value);
-            localStorage.setItem('pages' + i, myLibrary[i].pages.value);
-            localStorage.setItem('read' + i, myLibrary[i].read.value);
-            console.log(myLbrary[i].color.value +"  :color value");
-            localStorage.setItem('color' + i, myLibrary[i].color.value);
+function Store(){
+    if (storageAvailable('localStorage')) {
+        // Yippee! We can use localStorage awesomeness
+        console.log("storage confirmed");
+        //checks for certain element in the storage
+        function populateStorage() {
+            for(let i = 0; i < myLibrary.length; i++){
+                localStorage.setItem('name' + i, myLibrary[i].name.value);
+                localStorage.setItem('author' + i, myLibrary[i].author.value);
+                localStorage.setItem('pages' + i, myLibrary[i].pages.value);
+                localStorage.setItem('read' + i, myLibrary[i].read.value);
+                console.log(myLbrary[i].color.value +"  :color value");
+                localStorage.setItem('color' + i, myLibrary[i].color.value);
+            }
         }
-    }
-    //moves values from storage to website, stores them in varaibles and uses them.
-    function setTasks() {
-        for(let i = 0; i < myLibrary.length; i++){
-            var currentName = localStorage.getItem('name' + i);
-            var currentAuthor = localStorage.getItem('author' + i);
-            var currentPages = localStorage.getItem('pages' + i);
-            var currentRead = localStorage.getItem('read' + i);
-            var currentColor = localStorage.getItem('color' + i);
-
-            myLibrary[i].name.value = currentName;
-            myLibrary[i].author.value = currentAuthor;
-            myLibrary[i].pages.value = currentPages;
-            myLbrary[i].read.value = currentRead;
-            myLibrary[i].color.value = currentColor;
-
-            let nameFNB = currentName;
-            let authorFNB  = currentAuthor;
-            let pagesFNB = currentPages;
-            let readFNB = currentRead;
-            let colorFNB = currentColor;
-            let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB);
-            addBookToLibrary(newBook);
-            container.textContent = '';
-            display();
+        //moves values from storage to website, stores them in varaibles and uses them.
+        function setTasks() {
+            for(let i = 0; i < myLibrary.length; i++){
+                var currentName = localStorage.getItem('name' + i);
+                var currentAuthor = localStorage.getItem('author' + i);
+                var currentPages = localStorage.getItem('pages' + i);
+                var currentRead = localStorage.getItem('read' + i);
+                var currentColor = localStorage.getItem('color' + i);
+    
+                myLibrary[i].name.value = currentName;
+                myLibrary[i].author.value = currentAuthor;
+                myLibrary[i].pages.value = currentPages;
+                myLbrary[i].read.value = currentRead;
+                myLibrary[i].color.value = currentColor;
+    
+                let nameFNB = currentName;
+                let authorFNB  = currentAuthor;
+                let pagesFNB = currentPages;
+                let readFNB = currentRead;
+                let colorFNB = currentColor;
+                let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB);
+                addBookToLibrary(newBook);
+                container.textContent = '';
+                display();
+            }
         }
-    }
-    if(!localStorage.getItem('name' + 0)) {
-        //if there is no storage then puted the library in the storage
-            populateStorage();
-        }
-    setTasks();
-  }
-  else {
-    // Too bad, no localStorage for us
-    console.log("storage declined");
-  }
+        if(!localStorage.getItem('name' + 0)) {
+            //if there is no storage then puted the library in the storage
+                populateStorage();
+            }
+        setTasks();
+      }
+      else {
+        // Too bad, no localStorage for us
+        console.log("storage declined");
+      }    
+}
 
 
