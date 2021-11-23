@@ -23,7 +23,6 @@ function display(){
     for(let i = 0; i < myLibrary.length; i++){
         let newCard = document.createElement("div");
         newCard.classList.add("card");
-        // newCard.textContent = myLibrary[i].name + " " + myLibrary[i].author + " " +myLibrary[i].pages + " " + myLibrary[i].read;
         newCard.textContent = myLibrary[i].name + " " + myLibrary[i].author;
         newCard.id = myLibrary[i];
         let newBtn = document.createElement("button");
@@ -95,8 +94,8 @@ addBtn.addEventListener('click', function(){
         let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB);
         addBookToLibrary(newBook);
         container.textContent = '';
-        display();
-        Store();
+       // display(); 
+        Store(newBook);
         form.remove();
     });
     form.appendChild(continueBtn);
@@ -132,7 +131,7 @@ function storageAvailable(type) {
 }
 
 //activates if storage is available
-function Store(){
+function Store(newBook){
     if (storageAvailable('localStorage')) {
         // Yippee! We can use localStorage awesomeness
         console.log("storage confirmed");
@@ -143,7 +142,6 @@ function Store(){
                 localStorage.setItem('author' + i, myLibrary[i].author.value);
                 localStorage.setItem('pages' + i, myLibrary[i].pages.value);
                 localStorage.setItem('read' + i, myLibrary[i].read.value);
-                console.log(myLbrary[i].color.value +"  :color value");
                 localStorage.setItem('color' + i, myLibrary[i].color.value);
             }
         }
@@ -167,22 +165,20 @@ function Store(){
                 let pagesFNB = currentPages;
                 let readFNB = currentRead;
                 let colorFNB = currentColor;
-                let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB);
+                let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB); 
                 addBookToLibrary(newBook);
                 container.textContent = '';
                 display();
             }
         }
-        if(!localStorage.getItem('name' + 0)) {
-            //if there is no storage then puted the library in the storage
-                populateStorage();
-            }
+        //if there is no storage then puted the library in the storage
+        populateStorage();
         setTasks();
       }
       else {
         // Too bad, no localStorage for us
         console.log("storage declined");
       }    
-}
+};
 
 
