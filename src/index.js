@@ -1,15 +1,12 @@
-
 console.log("web is working");
 let myLibrary = []; //my library
 
-class Book {
-    constructor(name, author, pages, read, color){
-        this.name = name;
-        this.author = author;
-        this.pages = pages;
-        this.read = read;
-        this.color = color;
-    }
+function Book (name, author, pages, read, color) {
+       this.name = name;
+       this.author = author;
+       this.pages = pages;
+       this.read = read;
+       this.color = color;
 } //constructor for new books
 
 const container = document.querySelector(".container");
@@ -68,6 +65,16 @@ function display(){
         container.appendChild(newCard);
     }
 } 
+function populateStorage() {
+    for(let i = 0; i < myLibrary.length; i++){
+      localStorage.setItem('name' + i, myLibrary[i].name);
+      localStorage.setItem('author' + i, myLibrary[i].author);
+      localStorage.setItem('pages' + i, myLibrary[i].pages);
+      localStorage.setItem('read' + i, myLibrary[i].read);
+      localStorage.setItem('color' + i, myLibrary[i].color);
+      console.log(myLibrary[i].name + myLibrary[i].author + "   :this is inside the populateStorage");
+        }
+}
 
 //creates 4 inputs for name, author, pages, read, then when continue pressed it adds a book with the info and deletes the form.
 let addBtn = document.querySelector(".addBtn");
@@ -94,14 +101,41 @@ addBtn.addEventListener('click', function(){
         let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB);
         addBookToLibrary(newBook);
         container.textContent = '';
-       // display(); 
+        //display(); 
         Store();
         form.remove();
     });
     form.appendChild(continueBtn);
     container.appendChild(form);
-}
+} 
 ); 
+function setTasks() {
+            for(let i = 0; i < myLibrary.length; i++){
+              //gets value from the local storage and storing it into varaible
+                var currentName = localStorage.getItem('name' + i);
+                var currentAuthor = localStorage.getItem('author' + i);
+                var currentPages = localStorage.getItem('pages' + i);
+                var currentRead = localStorage.getItem('read' + i);
+                var currentColor = localStorage.getItem('color' + i);
+              //sets the library values of the specific task to the local storage
+                myLibrary[i].name = currentName;
+                myLibrary[i].author = currentAuthor;
+                myLibrary[i].pages = currentPages;
+                myLibrary[i].read = currentRead;
+                myLibrary[i].color = currentColor;
+              //creates the book from the values and adds it to the library and display
+                let nameFNB = currentName;
+                let authorFNB  = currentAuthor;
+                let pagesFNB = currentPages;
+                let readFNB = currentRead;
+                let colorFNB = currentColor;
+                let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB); 
+                addBookToLibrary(newBook);
+                container.textContent = '';
+                display();
+                //form.remove();
+            }
+       }
 
 //local storage shit section
 //function that finds if storage available and supported
@@ -135,49 +169,13 @@ function Store(){
     if (storageAvailable('localStorage')) {
         // Yippee! We can use localStorage awesomeness
         console.log("storage confirmed");
-        //checks for certain element in the storage
-        function populateStorage() {
-            for(let i = 0; i < myLibrary.length; i++){
-                localStorage.setItem('name' + i, myLibrary[i].name.value);
-                localStorage.setItem('author' + i, myLibrary[i].author.value);
-                localStorage.setItem('pages' + i, myLibrary[i].pages.value);
-                localStorage.setItem('read' + i, myLibrary[i].read.value);
-                localStorage.setItem('color' + i, myLibrary[i].color.value);
-            }
-        }
-        //moves values from storage to website, stores them in varaibles and uses them.
-        function setTasks() {
-            for(let i = 0; i < myLibrary.length; i++){
-                var currentName = localStorage.getItem('name' + i);
-                var currentAuthor = localStorage.getItem('author' + i);
-                var currentPages = localStorage.getItem('pages' + i);
-                var currentRead = localStorage.getItem('read' + i);
-                var currentColor = localStorage.getItem('color' + i);
-    
-                myLibrary[i].name.value = currentName;
-                myLibrary[i].author.value = currentAuthor;
-                myLibrary[i].pages.value = currentPages;
-                myLibrary[i].read.value = currentRead;
-                myLibrary[i].color.value = currentColor;
-    
-                let nameFNB = currentName;
-                let authorFNB  = currentAuthor;
-                let pagesFNB = currentPages;
-                let readFNB = currentRead;
-                let colorFNB = currentColor;
-                let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB); 
-                addBookToLibrary(newBook);
-                container.textContent = '';
-                display();
-            }
-        }
-        //if there is no storage then puted the library in the storage
         populateStorage();
         setTasks();
       }
       else {
         // Too bad, no localStorage for us
         console.log("storage declined");
+        display();
       }    
 };
 
