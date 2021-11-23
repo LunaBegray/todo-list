@@ -72,7 +72,7 @@ function populateStorage() {
       localStorage.setItem('pages' + i, myLibrary[i].pages);
       localStorage.setItem('read' + i, myLibrary[i].read);
       localStorage.setItem('color' + i, myLibrary[i].color);
-      console.log(myLibrary[i].name + myLibrary[i].author + "   :this is inside the populateStorage");
+      console.log(myLibrary[i].name + " " + myLibrary[i].author + " " + myLibrary[i].pages + " " + myLibrary[i].read + "   :this is inside the populateStorage");
         }
 }
 
@@ -110,6 +110,7 @@ addBtn.addEventListener('click', function(){
 } 
 ); 
 function setTasks() {
+          populateStorage();
             for(let i = 0; i < myLibrary.length; i++){
               //gets value from the local storage and storing it into varaible
                 var currentName = localStorage.getItem('name' + i);
@@ -169,7 +170,7 @@ function Store(){
     if (storageAvailable('localStorage')) {
         // Yippee! We can use localStorage awesomeness
         console.log("storage confirmed");
-        populateStorage();
+
         setTasks();
       }
       else {
@@ -178,5 +179,3 @@ function Store(){
         display();
       }    
 };
-
-
