@@ -1,13 +1,30 @@
 console.log("web is working");
+const container = document.querySelector(".container");
 let myLibrary = []; //my library
 // retrives all values from local storage and puts them in storeOrg array to organize them.
 if(localStorage.getItem("name0") !== null){
     let storageOrg = new Array();
     for(let key in window.localStorage){
        storageOrg.push(localStorage[key]);
-       console.log(window.lowindowcalStorage[key] + "  : storage keys")
       }
+    console.log(storageOrg);
+    let numStLe = storageOrg.length-6
+    let useStLe = numStLe/5;
+    console.log(useStLe);
+    for(let i = 0; i < useStLe; i++){
+        console.log("if statement lunched");
+        let curName = localStorage.getItem("name" + i);
+        let curAuthor = localStorage.getItem("author" + i);
+        let curPages = localStorage.getItem("pages" + i);
+        let curRead = localStorage.getItem("read" + i);
+        let curColor = localStorage.getItem('color' + i);
+        let newTask = new Book(curName, curAuthor, curPages, curRead, curColor);
+        myLibrary.push(newTask);
+        console.log(myLibrary);
+    }
+    display();
   }
+
 
 function Book (name, author, pages, read, color) {
        this.name = name;
@@ -17,11 +34,14 @@ function Book (name, author, pages, read, color) {
        this.color = color;
 } //constructor for new books
 
-const container = document.querySelector(".container");
 
+
+
+
+//adding books to the library
 function addBookToLibrary(book) {
     myLibrary.push(book);
-} //adding books to the library
+} 
 
 //loops through myLibrary to find books and display it.
 function display(){
@@ -43,10 +63,12 @@ function display(){
             if(myLibrary[i].color == 'lightyellow'){
                 newCard.style.backgroundColor = 'red';
                 myLibrary[i].color = 'red';
+                populateStorage();
                 console.log("first if statement lunched");
             } else if (myLibrary[i].color == 'red') {
                 newCard.style.backgroundColor = 'lightyellow';
                 myLibrary[i].color = 'lightyellow';
+                populateStorage();
                 console.log("second if statement lunched");
             }
         });
@@ -75,7 +97,7 @@ function display(){
         container.appendChild(newCard);
     }
 } 
-/*
+
 function populateStorage() {
     for(let i = 0; i < myLibrary.length; i++){
       localStorage.setItem('name' + i, myLibrary[i].name);
@@ -85,7 +107,7 @@ function populateStorage() {
       localStorage.setItem('color' + i, myLibrary[i].color);
       console.log(myLibrary[i].name + " " + myLibrary[i].author + " " + myLibrary[i].pages + " " + myLibrary[i].read + "   :this is inside the populateStorage");
         }
-} */
+} 
 
 //creates 4 inputs for name, author, pages, read, then when continue pressed it adds a book with the info and deletes the form.
 let addBtn = document.querySelector(".addBtn");
@@ -111,6 +133,7 @@ addBtn.addEventListener('click', function(){
         let colorFNB = 'lightyellow';
         let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB);
         addBookToLibrary(newBook);
+        populateStorage();
         container.textContent = '';
         display(); 
         //Store();
