@@ -1,5 +1,13 @@
 console.log("web is working");
 let myLibrary = []; //my library
+// retrives all values from local storage and puts them in storeOrg array to organize them.
+if(localStorage.getItem("name0") !== null){
+    let storageOrg = new Array();
+    for(let key in window.localStorage){
+       storageOrg.push(localStorage[key]);
+       console.log(window.lowindowcalStorage[key] + "  : storage keys")
+      }
+  }
 
 function Book (name, author, pages, read, color) {
        this.name = name;
@@ -31,12 +39,14 @@ function display(){
         let anoBtn = document.createElement("button");
         anoBtn.textContent = "Mark As Done";
         anoBtn.addEventListener('click', function(){
-            console.log("button lunched");
-            if(newCard.style.backgroundColor == 'red'){
-                newCard.style.backgroundColor = 'lightyellow';
-                console.log("first if statement lunched");
-            } else {
+            console.log("switch button lunched");
+            if(myLibrary[i].color == 'lightyellow'){
                 newCard.style.backgroundColor = 'red';
+                myLibrary[i].color = 'red';
+                console.log("first if statement lunched");
+            } else if (myLibrary[i].color == 'red') {
+                newCard.style.backgroundColor = 'lightyellow';
+                myLibrary[i].color = 'lightyellow';
                 console.log("second if statement lunched");
             }
         });
@@ -65,6 +75,7 @@ function display(){
         container.appendChild(newCard);
     }
 } 
+/*
 function populateStorage() {
     for(let i = 0; i < myLibrary.length; i++){
       localStorage.setItem('name' + i, myLibrary[i].name);
@@ -74,7 +85,7 @@ function populateStorage() {
       localStorage.setItem('color' + i, myLibrary[i].color);
       console.log(myLibrary[i].name + " " + myLibrary[i].author + " " + myLibrary[i].pages + " " + myLibrary[i].read + "   :this is inside the populateStorage");
         }
-}
+} */
 
 //creates 4 inputs for name, author, pages, read, then when continue pressed it adds a book with the info and deletes the form.
 let addBtn = document.querySelector(".addBtn");
@@ -101,14 +112,14 @@ addBtn.addEventListener('click', function(){
         let newBook = new Book(nameFNB, authorFNB, pagesFNB, readFNB, colorFNB);
         addBookToLibrary(newBook);
         container.textContent = '';
-        //display(); 
-        Store();
+        display(); 
+        //Store();
         form.remove();
     });
     form.appendChild(continueBtn);
     container.appendChild(form);
 } 
-); 
+); /*
 function setTasks() {
           populateStorage();
             for(let i = 0; i < myLibrary.length; i++){
@@ -178,4 +189,4 @@ function Store(){
         console.log("storage declined");
         display();
       }    
-};
+}; */
